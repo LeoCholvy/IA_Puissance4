@@ -49,14 +49,18 @@ class Puissance4:
         for ligne in range(self.H):
             if ligne+1 >= self.H:
                 self.grille[ligne][entree] = sy
+                lig = ligne
                 break
             if self.grille[ligne+1][entree] != 0:
                 self.grille[ligne][entree] = sy
+                lig = ligne
                 break
-        victoire = self.Verif()
+        victoire = self.Verif(lig,entree)
+        if self.console and victoire:
+            nom = self.joueurs[self.current]["nom"]
+            print(f"{nom} a gagné !")
         self.n_tours += 1
         self.Changement_joueur()
-
         return victoire #indique si le joueur qui vient de joué a gagné
     def Changement_joueur(self):
         """+1 a current"""
@@ -64,9 +68,75 @@ class Puissance4:
         self.current += 1
         if self.current >= n_joueurs:
             self.current = 0
-    def Verif(self):
+    def Verif(self,x,y):
         """Fonction qui vérifie si le joueurs de current a gagné"""
-        #TODO: verif victoire
+        #NOTE: x:pour la hauteur et vers le bas
+        #      y:pour la largeur et vers la droite
+        #TODO: Optimisation de la fonction et simplification
+        pow = self.pow
+        sy = self.joueurs[self.current]["symbole"]
+        # colonne
+        p=0
+        for i in range(x-pow-1, x+pow):
+            if not(0 <= i and i < self.H):
+                continue
+            if self.grille[i][y] == sy:
+                p+=1
+            else:
+                p=0
+            if p == 4:
+                return True
+        # ligne
+        p=0
+        for i in range(y-pow-1, y+pow):
+            if not(0 <= i and i < self.L):
+                continue
+            if self.grille[x][i] == sy:
+                p+=1
+            else:
+                p=0
+            if p == 4:
+                return True
+        # diagonale NE-SO
+        i, xf = x-pow+1, x+pow
+        j, yf = y-pow+1, y+pow
+        while i != xf and j != yf:
+            if not(0 <= i and i < self.H):
+                i+=1
+                j+=1
+                continue
+            if not(0 <= j and j < self.L):
+                i+=1
+                j+=1
+                continue
+            if self.grille[i][j] == sy:
+                p+=1
+            else:
+                p=0
+            if p == 4:
+                return True
+        # diagonale NO-SE
+        i, xf = x-pow+1, x+pow
+        j, yf = y+pow-1, y-pow
+        while i != xf and j != yf:
+            if not(0 <= i and i < self.H):
+                i+=1
+                j+=1
+                continue
+            if not(0 <= j and j < self.L):
+                i+=1
+                j+=1
+                continue
+            if self.grille[i][j] == sy:
+                p+=1
+            else:
+                p=0
+            if p == 4:
+                return True
+            print(self.grille[i][j], i,j)
+            i+=1
+            j-=1
+
         return False
     def Affiche(self):
         for i in self.grille[0:-1]:
@@ -75,16 +145,33 @@ class Puissance4:
             print()
         for j in self.grille[-1]:
             print(j, end="")
+        print()
 
 
 if __name__ == "__main__":
     jeu = Puissance4()
     jeu.Start(j=0)
-    jeu.Play(1)
-    jeu.Play(2)
-    jeu.Play(1)
-    jeu.Play(2)
-    jeu.Play(1)
-    jeu.Play(2)
-    jeu.Play(1)
+    # jeu.Play(1)
+    # jeu.Play(1)
+    # jeu.Play(2)
+    # jeu.Play(1)
+    # jeu.Play(3)
+    # jeu.Play(1)
+    # jeu.Play(4)
+    # jeu.Play(1)
+    # jeu.grille = [
+    #     [0,0,0,0,0,0,"x"],
+    #     [0,0,0,0,0,"x",0],
+    #     [0,0,0,0,"x",0,0],
+    #     [0,0,0,"x",0,0,0],
+    #     [0,0,0,0,0,0,0]
+    # ]
+    jeu.grille = [
+        [0,0,0,0,0,0,0],
+        [0,"x",0,0,0,0,0],
+        [0,0,"x",0,0,0,0],
+        [0,0,0,"x",0,0,0],
+        [0,0,0,0,0,0,0]
+    ]
     jeu.Affiche()
+    jeu.Play(4)

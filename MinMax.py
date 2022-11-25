@@ -1,43 +1,49 @@
 from copy import deepcopy
+from random import randint
 
-# coef: -1 si c'est le coup de l'adversaire
-#        1 si c'est le coup de l'IA
-def Meilleur_coup(jeu:object,n:int,coef:int):
+# ia: si c'est l'ia qui joue ou non
+# ici: si True le score pour une victoire et positif
+#      si False, il est negatif
+def Meilleur_coup(jeu:object,n:int):
     # pour chaque colonne
     max = (None, 0)
+    pow = jeu.pow
     # (entree, score)
     for entree in range (pow):
         pow=jeu.pow
         pos = jeu.Get_position(entree)
+        # si le coup n'est pas valide
         if pos == -1:
             continue
+        # si le coup donne match nul
+        jeu_virtuel = deepcopy(jeu)
+        jeu_virtuel.console = False
+        issue = jeu_virtuel.Play(entree)
+        if issue == 1:
+            score = 0
+            continue    
+        # si le coup donne une victoire
+        elif issue == 2:
+            score = n * 1000
 
+        # score du coup en fonction des coups possibles ensuite
+        elif issue == 0:
+            # remplacer 0 par le score du coup avec la fonction d'évaluation
+            if n == 0:
+                score = 0
+            else:
+                score = 0 - Meilleur_coup(jeu_virtuel, n-1)[1]
 
-        # # verif si le coup est possible
-        # pow = jeu.Get_position(entree)
-        # if pow == -1:
-        #     # le coup n'est pas valide
-        #     continue
-        # # fin réccursif
-        # if n == 0:
-        #     score = Evaluation(jeu, entree)
-        # # score du coup
-        # else:
-        #     jeu_virtuel = deepcopy(jeu)
-        #     jeu_virtuel.Play(entree)
-        #     # prendre en charge les fin de partie
-        #     score = Meilleur_coup(jeu_virtuel) + Evaluation(jeu, entree)
-        # if max < score:
-        #     # FIXME: score avec le coef
-        #     max = (entree, score)
-        #     continue
+        # meilleur coup
+        if max[1] < score:
+            max = (entree, score)
+    if max[0] == None:
+        max = (randint(0,pow), 0)
     return max
-    # TODO: si max = (None,x) aucun coup n'est possible, prendre en charge cette possibilité (score match nul)
 
 def Evaluation(jeu, x, y) -> int:
     """Fonction qui retourne un score pour un coup"""
     pass
     # score pour nombre pions alignés
     # score pour pions suivis
-    # score pour match nul ?
-    # score pour victoire
+    # score pour empecher un coup

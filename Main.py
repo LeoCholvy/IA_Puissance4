@@ -12,7 +12,7 @@ JEU = P4(j=[
 JEU.Start()
 
 VICTOIRE = False
-while not VICTOIRE:
+while not VICTOIRE in [1,2]:
     nom = JEU.Get_name_current_player()
 
     if nom == "Joueur":

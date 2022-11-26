@@ -29,8 +29,7 @@ def Meilleur_coup(jeu:object,n:int, ia = True):
             if n == 0:
                 score = 0
             else:
-                mc = Meilleur_coup(jeu_virtuel, n-1, not ia)
-                score = 0 - mc[2]/(n/2) - mc[1]/n
+                score = 0 - Meilleur_coup(jeu_virtuel, n-1, not ia)[2]
         coups . append ((entree, score))
     # si aucun coup n'est possible, jouer aléatoirement
     # normalement ce n'est pas censé arriver

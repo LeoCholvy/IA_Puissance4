@@ -8,7 +8,7 @@ class Puissance4:
     start:
         initialise une nouvelle partie (il faut le faire pour la 1ere aussi)
     """
-    def __init__(self, console=True, p=4, H=5, L=7, j=None) -> None:
+    def __init__(self, console=True, p=4, H=6, L=7, j=None) -> None:
         """
         console: booleen activation affichage console
         p: nombre de pions a aligné pour gagner, par défaut: 4

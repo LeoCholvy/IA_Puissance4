@@ -1,6 +1,7 @@
 from copy import copy
 from random import randint
-
+from colorama import Fore
+from colorama import Style
 
 class Puissance4:
     """Cette classe ne comprend pas d'interface
@@ -124,13 +125,16 @@ class Puissance4:
                 return True
         return False
     def Affiche(self):
-        for i in self.grille[0:-1]:
+        joueurs = [x["symbole"] for x in self.joueurs]
+        for i in self.grille:
             for j in i:
-                print(j, end="")
+                if j == joueurs[0]:
+                    print(f"{Fore.BLUE}{j}{Style.RESET_ALL}",end=" ")
+                elif j == joueurs[1]:
+                    print(f"{Fore.RED}{j}{Style.RESET_ALL}",end=" ")
+                else:
+                    print(f"{j} ", end="")
             print()
-        for j in self.grille[-1]:
-            print(j, end="")
-        print()
     def Get_grille(self):
         return self.grille
     def Get_position(self, entree, grille = None):
@@ -157,14 +161,14 @@ class Puissance4:
 if __name__ == "__main__":
     jeu = Puissance4()
     jeu.Start(j=0)
-    # jeu.Play(1)
-    # jeu.Play(1)
-    # jeu.Play(2)
-    # jeu.Play(1)
-    # jeu.Play(3)
-    # jeu.Play(1)
-    # jeu.Play(4)
-    # jeu.Play(1)
+    jeu.Play(1)
+    jeu.Play(1)
+    jeu.Play(2)
+    jeu.Play(1)
+    jeu.Play(3)
+    jeu.Play(1)
+    jeu.Play(4)
+    jeu.Play(1)
     # jeu.grille = [
     #     [0,0,0,0,0,0,"x"],
     #     [0,0,0,0,0,"x",0],

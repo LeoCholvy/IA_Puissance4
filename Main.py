@@ -11,7 +11,7 @@ from colorama import Style
 JEU = P4(j=[
     {"nom": "Joueur", "symbole": "x"},
     {"nom": "Algo_MinMax","symbole": "+"}
-])
+], H=6)
 JEU.Start()
 
 VICTOIRE = False

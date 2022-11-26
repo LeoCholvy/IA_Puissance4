@@ -2,7 +2,7 @@
 # Branche "main": code testé et fonctionnel uniquement, Ne pas entrainer d'IA dans cette branche
 
 from Jeu import Puissance4 as P4
-from MinMax import Meilleur_coup as Mc
+from MinMax import Meilleur_coup
 from colorama import Fore
 from colorama import Style
 
@@ -15,17 +15,21 @@ JEU = P4(j=[
 JEU.Start()
 
 VICTOIRE = False
-while not VICTOIRE:
+while not VICTOIRE in [1,2]:
     nom = JEU.Get_name_current_player()
 
     if nom == "Joueur":
         JEU.Affiche()
-        entree = int(input("Entrez la colonne (0 à 6):\n>>>"))
+        try:
+            entree = int(input("Entrez la colonne (0 à 6):\n>>>"))
+        except:
+            continue
         VICTOIRE = JEU.Play(entree)
     else:
-        entree, score = Mc(JEU, 6)
+        entree, score, somme = Meilleur_coup(JEU, 5)
         if score == 0:
             print(f"Le score du coup '{entree}' {Fore.RED}{score}{Style.RESET_ALL}")
         else:
             print(f"Le score du coup '{entree}' {score}")
         VICTOIRE = JEU.Play(entree) 
+print(VICTOIRE)

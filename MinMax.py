@@ -1,43 +1,57 @@
 from copy import deepcopy
+from random import randint
 
-# coef: -1 si c'est le coup de l'adversaire
-#        1 si c'est le coup de l'IA
-def Meilleur_coup(jeu:object,n:int,coef:int):
+# ia: si c'est l'ia qui joue ou non
+# ici: si True le score pour une victoire et positif
+#      si False, il est negatif
+def Meilleur_coup(jeu:object,n:int, ia = True):
     # pour chaque colonne
-    max = (None, 0)
+    coups = []
+    n_coups = jeu.L
     # (entree, score)
-    for entree in range (pow):
-        pow=jeu.pow
-        pos = jeu.Get_position(entree)
-        if pos == -1:
+    for entree in range (n_coups):
+        jeu_virtuel = deepcopy(jeu)
+        jeu_virtuel.console = False
+        issue = jeu_virtuel.Play(entree)
+        # si le coup n'est pas valide
+        if issue == -1:
             continue
+        # si le coup donne match nul
+        elif issue == 1:
+            score = 0
+        # si le coup donne une victoire
+        elif issue == 2:
+            score = n * 1000
 
+        # score du coup en fonction des coups possibles ensuite
+        elif issue == 0:
+            # remplacer 0 par le score du coup avec la fonction d'évaluation
+            if n == 0:
+                score = 0
+            else:
+                mc = Meilleur_coup(jeu_virtuel, n-1, not ia)
+                score = 0 - mc[2]/(n/2) - mc[1]/n
+        coups . append ((entree, score))
+    # si aucun coup n'est possible, jouer aléatoirement
+    # normalement ce n'est pas censé arriver
+    if coups == []:
+        coups = [(randint(0,n_coups-1), 0)]
+    # si les coups ont tous un score de 0
+    coups = sorted(coups, key=lambda coup: coup[1], reverse=True)
+    if coups[-1][1] == 0 and coups[0][1] == 0:
+        coups = [(randint(0,n_coups-1), 0)]
+    return coups[0][0] , coups[0][1] , Somme(coups)
 
-        # # verif si le coup est possible
-        # pow = jeu.Get_position(entree)
-        # if pow == -1:
-        #     # le coup n'est pas valide
-        #     continue
-        # # fin réccursif
-        # if n == 0:
-        #     score = Evaluation(jeu, entree)
-        # # score du coup
-        # else:
-        #     jeu_virtuel = deepcopy(jeu)
-        #     jeu_virtuel.Play(entree)
-        #     # prendre en charge les fin de partie
-        #     score = Meilleur_coup(jeu_virtuel) + Evaluation(jeu, entree)
-        # if max < score:
-        #     # FIXME: score avec le coef
-        #     max = (entree, score)
-        #     continue
-    return max
-    # TODO: si max = (None,x) aucun coup n'est possible, prendre en charge cette possibilité (score match nul)
+def Somme(L):
+    """renvoie la somme des scores des coups de L"""
+    r = 0
+    for i in L:
+        r+=i[1]
+    return r
 
 def Evaluation(jeu, x, y) -> int:
     """Fonction qui retourne un score pour un coup"""
     pass
     # score pour nombre pions alignés
     # score pour pions suivis
-    # score pour match nul ?
-    # score pour victoire
+    # score pour empecher un coup0

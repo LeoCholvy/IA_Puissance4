@@ -6,7 +6,6 @@ from random import randint
 #      si False, il est negatif
 def Meilleur_coup(jeu:object,n:int, ia = True, val=0):
     # pour chaque colonne
-    coups = []
     n_coups = jeu.L
     minmax = []
     # (entree, score)
@@ -22,33 +21,36 @@ def Meilleur_coup(jeu:object,n:int, ia = True, val=0):
             score = 0
         # si le coup donne une victoire
         elif issue == 2:
-            score = -val + n * 10000
+            if ia:
+                score = val + n * 1000
+            else:
+                score = val - n * 1000
 
         # score du coup en fonction des coups possibles ensuite
         elif issue == 0:
             # remplacer 0 par le score du coup avec la fonction d'évaluation
             if n == 0:
-                score = -val
+                score = val
             else:
                 # score du coup
                 eval = Evaluation(jeu_virtuel,n,entree)
-                # if not ia:
-                #     eval = -eval
-                e, score = Meilleur_coup(jeu_virtuel,n-1,not ia,-val+eval)
+                if not ia:
+                    eval = -eval
+                e, score = Meilleur_coup(jeu_virtuel,n-1,not ia,val+eval)
         minmax . append((entree,score))
         if score == 0: print(entree,score,n, ia, val)
     if n==3:
         print(minmax)
-    #max
-    # if ia:
-    #     minmax = sorted(minmax,key=lambda coup: coup[1], reverse=True)
-    #     max = minmax[0][1]
-    #     minmax = list(filter(lambda coup: coup[1] == max, minmax))
-    # #min
-    # else:
-    minmax = sorted(minmax,key=lambda coup: coup[1], reverse=True)
-    min = minmax[0][1]
-    minmax = list(filter(lambda coup: coup[1] == min, minmax))
+    # max
+    if ia:
+        minmax = sorted(minmax,key=lambda coup: coup[1], reverse=True)
+        max = minmax[0][1]
+        minmax = list(filter(lambda coup: coup[1] == max, minmax))
+    # min
+    else:
+        minmax = sorted(minmax,key=lambda coup: coup[1], reverse=False)
+        min = minmax[0][1]
+        minmax = list(filter(lambda coup: coup[1] == min, minmax))
     # si aucun coups possibles
     if minmax == []:
         # print('wtf --------------------------------')

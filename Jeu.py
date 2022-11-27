@@ -1,5 +1,7 @@
 from copy import copy
 from random import randint
+from colorama import Fore
+from colorama import Style
 
 
 class Puissance4:
@@ -95,6 +97,7 @@ class Puissance4:
         pow = self.pow
         sy = self.joueurs[self.current]["symbole"]
         
+        self.a=[]
         colonne = self.Aligne([(i,y) for i in range(x-pow-1, x+pow)],sy,pow)
         ligne = self.Aligne([(x,i) for i in range(y-pow-1, y+pow)],sy,pow)
         lx = [i for i in range(x-pow+1, x+pow)]
@@ -111,6 +114,8 @@ class Puissance4:
         """Fonction qui prend en argument une liste de coordonnés
         Elle indique si assez de "pions" se suivent"""
         p=0
+        a=0
+        vic=False
         for i,j in coord:
             if not(0 <= i and i < self.H and 0 <= j and j < self.L):
                 i+=1
@@ -118,19 +123,24 @@ class Puissance4:
                 continue
             if self.grille[i][j] == sy:
                 p+=1
+                a+=1
             else:
                 p=0
             if p == pow:
-                return True
-        return False
+                vic = True
+        self.a.append(a)
+        return vic
     def Affiche(self):
-        for i in self.grille[0:-1]:
+        joueurs = [x["symbole"] for x in self.joueurs]
+        for i in self.grille:
             for j in i:
-                print(j, end="")
+                if j == joueurs[0]:
+                    print(f"{Fore.BLUE}{j}{Style.RESET_ALL}",end=" ")
+                elif j == joueurs[1]:
+                    print(f"{Fore.RED}{j}{Style.RESET_ALL}",end=" ")
+                else:
+                    print(f"{j} ", end="")
             print()
-        for j in self.grille[-1]:
-            print(j, end="")
-        print()
     def Get_grille(self):
         return self.grille
     def Get_position(self, entree, grille = None):

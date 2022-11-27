@@ -98,6 +98,7 @@ class Puissance4:
         sy = self.joueurs[self.current]["symbole"]
         
         self.a=[]
+        self.missing=[]
         colonne = self.Aligne([(i,y) for i in range(x-pow-1, x+pow)],sy,pow)
         ligne = self.Aligne([(x,i) for i in range(y-pow-1, y+pow)],sy,pow)
         lx = [i for i in range(x-pow+1, x+pow)]
@@ -115,20 +116,28 @@ class Puissance4:
         Elle indique si assez de "pions" se suivent"""
         p=0
         a=0
+        c=0
+        m=pow
         vic=False
         for i,j in coord:
             if not(0 <= i and i < self.H and 0 <= j and j < self.L):
-                i+=1
-                j+=1
                 continue
             if self.grille[i][j] == sy:
                 p+=1
                 a+=1
+                c+=1
             else:
+                if self.grille[i][j] != 0:
+                    if pow - c < m :
+                        m=c
+                    c=0
                 p=0
             if p == pow:
                 vic = True
+        if pow - c < m:
+            m=c
         self.a.append(a)
+        self.missing.append(m)
         return vic
     def Affiche(self):
         joueurs = [x["symbole"] for x in self.joueurs]

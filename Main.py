@@ -11,8 +11,8 @@ from colorama import Style
 JEU = P4(j=[
     {"nom": "Joueur", "symbole": "x"},
     {"nom": "Algo_MinMax","symbole": "+"}
-], H=6)
-JEU.Start()
+])
+JEU.Start(j=0)
 
 VICTOIRE = False
 while not VICTOIRE in [1,2]:
@@ -26,6 +26,7 @@ while not VICTOIRE in [1,2]:
             continue
         VICTOIRE = JEU.Play(entree)
     else:
-        # ENTREE
+        entree, score = Meilleur_coup(JEU,6)
+        print(f"L'ia joue {entree}, ce coup a un score de {score}")
         VICTOIRE = JEU.Play(entree) 
-print(VICTOIRE)
+JEU.Affiche()

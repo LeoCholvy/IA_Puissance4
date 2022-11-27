@@ -2,13 +2,16 @@
 # Branche "main": code testé et fonctionnel uniquement, Ne pas entrainer d'IA dans cette branche
 
 from Jeu import Puissance4 as P4
+from MinMax import Meilleur_coup
+from colorama import Fore
+from colorama import Style
 
 # Test MinMax
 # init jeu
 JEU = P4(j=[
     {"nom": "Joueur", "symbole": "x"},
     {"nom": "Algo_MinMax","symbole": "+"}
-])
+], H=6)
 JEU.Start()
 
 VICTOIRE = False
@@ -17,7 +20,12 @@ while not VICTOIRE in [1,2]:
 
     if nom == "Joueur":
         JEU.Affiche()
-        entree = int(input("Entrez la colonne (0 à 6):\n>>>"))
+        try:
+            entree = int(input("Entrez la colonne (0 à 6):\n>>>"))
+        except:
+            continue
         VICTOIRE = JEU.Play(entree)
     else:
-        JEU.Play(1)
+        # ENTREE
+        VICTOIRE = JEU.Play(entree) 
+print(VICTOIRE)

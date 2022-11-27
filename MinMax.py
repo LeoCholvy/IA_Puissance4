@@ -1,4 +1,5 @@
 from copy import deepcopy
+from random import randint
 
 # coef: -1 si c'est le coup de l'adversaire
 #        1 si c'est le coup de l'IA

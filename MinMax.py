@@ -22,22 +22,19 @@ def Meilleur_coup(jeu:object,n:int, ia = True, val=0):
             score = 0
         # si le coup donne une victoire
         elif issue == 2:
-            if ia:
-                score = val + n * 1000
-            else:    
-                score = val - n * 1000
+            score = -val + n * 10000
 
         # score du coup en fonction des coups possibles ensuite
         elif issue == 0:
             # remplacer 0 par le score du coup avec la fonction d'évaluation
             if n == 0:
-                score = val
+                score = -val
             else:
                 # score du coup
-                eval = Evaluation(jeu_virtuel,n)
-                if not ia:
-                    eval = -eval
-                e, score = Meilleur_coup(jeu_virtuel,n-1,not ia,val+eval)
+                eval = Evaluation(jeu_virtuel,n,entree)
+                # if not ia:
+                #     eval = -eval
+                e, score = Meilleur_coup(jeu_virtuel,n-1,not ia,-val+eval)
         minmax . append((entree,score))
         if score == 0: print(entree,score,n, ia, val)
     if n==3:
@@ -57,10 +54,12 @@ def Meilleur_coup(jeu:object,n:int, ia = True, val=0):
         # print('wtf --------------------------------')
         return (randint(2,4),0)
     return minmax[randint(0,len(minmax)-1)]
-def Evaluation(jeu,n) -> int:
+def Evaluation(jeu,n,y) -> int:
     """Fonction qui retourne un score pour un coup"""
     alignes = jeu.a
     score = 0
+    if y == 3:
+        score =+ n
     for i in alignes:
-        score += i
-    return score*10*n
+        score += i*10*n
+    return score

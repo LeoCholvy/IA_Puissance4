@@ -12,7 +12,7 @@ JEU = P4(j=[
     {"nom": "Joueur", "symbole": "x"},
     {"nom": "Algo_MinMax","symbole": "+"}
 ])
-JEU.Start(j=1)
+JEU.Start(j=0)
 
 VICTOIRE = False
 while not VICTOIRE in [1,2]:

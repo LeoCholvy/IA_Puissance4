@@ -69,7 +69,7 @@ class Puissance4:
         if self.Match_nul():
             if self.console:
                 nom = self.joueurs[self.current]["nom"]
-                print("Egalité ! bandes de ng")
+                print("Egalité !")
             return 1 # match nul
         #verif victoire
         victoire = self.Verif(lig,entree)
@@ -144,6 +144,12 @@ class Puissance4:
         self.a.append(a)
         self.missing.append(m)
         return vic
+    # def Affiche(self):
+    #     joueurs = [x["symbole"] for x in self.joueurs]
+    #     for i in self.grille:
+    #         for j in i:
+    #             print(f"{j} ", end="")
+    #         print()
     def Affiche(self):
         joueurs = [x["symbole"] for x in self.joueurs]
         for i in self.grille:

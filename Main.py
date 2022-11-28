@@ -12,7 +12,7 @@ JEU = P4(j=[
     {"nom": "Joueur", "symbole": "x"},
     {"nom": "Algo_MinMax","symbole": "+"}
 ])
-JEU.Start(j=0)
+JEU.Start(j=1)
 
 VICTOIRE = False
 while not VICTOIRE in [1,2]:
@@ -26,7 +26,7 @@ while not VICTOIRE in [1,2]:
             continue
         VICTOIRE = JEU.Play(entree)
     else:
-        entree, score = Meilleur_coup(JEU,6)
+        entree, score = Meilleur_coup(JEU,5)
         print(f"L'ia joue {entree}, ce coup a un score de {score}")
         VICTOIRE = JEU.Play(entree) 
 JEU.Affiche()

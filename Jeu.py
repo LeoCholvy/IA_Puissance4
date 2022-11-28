@@ -119,8 +119,10 @@ class Puissance4:
         c=0
         m=pow
         vic=False
+        debug = 0
         for i,j in coord:
             if not(0 <= i and i < self.H and 0 <= j and j < self.L):
+                c = 0
                 continue
             if self.grille[i][j] == sy:
                 p+=1
@@ -129,13 +131,16 @@ class Puissance4:
             else:
                 if self.grille[i][j] != 0:
                     if pow - c < m :
-                        m=c
-                    c=0
+                        if debug == 0: #sinon ca fait 3 a gauche
+                            debug = 1
+                        else:
+                            m = pow - c
+                    c = 0
                 p=0
             if p == pow:
                 vic = True
         if pow - c < m:
-            m=c
+            m = pow - c
         self.a.append(a)
         self.missing.append(m)
         return vic

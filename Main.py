@@ -39,3 +39,5 @@ while not VICTOIRE in [1,2]:
         print(f"L'ia joue {entree}, ce coup a un score de {score}")
         VICTOIRE = JEU.Play(entree) 
 JEU.Affiche()
+
+input("Appuiyez sur entrer pour quitter")

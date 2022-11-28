@@ -40,9 +40,6 @@ def Meilleur_coup(jeu:object,n:int,ia=True, issue = 3):
                 coup = [entree]
             elif new_score == value:
                 coup.append(entree)
-        if n == 5:
-            print(coup, value)
-            print(jeu_virtuel.missing)
         if coup == []:
             coup = coups_possibles[randint(0,len(coups_possibles)-1)]
         else:
@@ -82,6 +79,7 @@ def Evaluation(jeu, g_sy, b_sy) -> int:
     grille = jeu.grille
     wp = [] # (coord, missing)
     score = 0
+    # TODO: une bonne partie des coord est inutile 
     for x in range(h_max, jeu.H):
         for y in range(jeu.L):
             directions = [
@@ -108,12 +106,14 @@ def Evaluation(jeu, g_sy, b_sy) -> int:
                 if n == -1:
                     continue
                 elif n == 4:
-                    score += 1000000
+                    score += 10000000
                 elif n == 3:
                     score += 10000
                     if Under_wp(coord, wp):
                         score += 100000
-                    wp.append (coord)
+                    if not coord in wp:
+                        score += 50000
+                        wp.append (coord)
                 elif n == 2:
                     score += 100
                 elif n == 1:

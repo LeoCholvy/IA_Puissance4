@@ -3,8 +3,8 @@
 
 from Jeu import Puissance4 as P4
 from MinMax import Meilleur_coup
-# from colorama import Fore
-# from colorama import Style
+from colorama import Fore
+from colorama import Style
 
 # Test MinMax
 # init jeu
@@ -12,16 +12,7 @@ JEU = P4(j=[
     {"nom": "Joueur", "symbole": "x"},
     {"nom": "Algo_MinMax","symbole": "+"}
 ])
-
-while True:
-    try:
-        INT = int(input("Choississez son intelligence (6 ? 5 si trop long ou moi si t nul):\n>>>"))
-        if INT < 0:
-            continue
-        break
-    except:
-        continue
-JEU.Start()
+JEU.Start(j=1)
 
 VICTOIRE = False
 while not VICTOIRE in [1,2]:
@@ -35,7 +26,7 @@ while not VICTOIRE in [1,2]:
             continue
         VICTOIRE = JEU.Play(entree)
     else:
-        entree, score = Meilleur_coup(JEU,INT)
+        entree, score = Meilleur_coup(JEU,5)
         print(f"L'ia joue {entree}, ce coup a un score de {score}")
         VICTOIRE = JEU.Play(entree) 
 JEU.Affiche()

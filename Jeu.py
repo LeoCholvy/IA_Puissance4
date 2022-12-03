@@ -115,35 +115,16 @@ class Puissance4:
         """Fonction qui prend en argument une liste de coordonnés
         Elle indique si assez de "pions" se suivent"""
         p=0
-        a=0
-        c=0
-        m=pow
-        vic=False
-        debug = 0
         for i,j in coord:
             if not(0 <= i and i < self.H and 0 <= j and j < self.L):
-                c = 0
                 continue
             if self.grille[i][j] == sy:
                 p+=1
-                a+=1
-                c+=1
             else:
-                if self.grille[i][j] != 0:
-                    if pow - c < m :
-                        if debug == 0: #sinon ca fait 3 a gauche
-                            debug = 1
-                        else:
-                            m = pow - c
-                    c = 0
                 p=0
             if p == pow:
-                vic = True
-        if pow - c < m:
-            m = pow - c
-        self.a.append(a)
-        self.missing.append(m)
-        return vic
+                return True
+        return False
     def Affiche(self):
         joueurs = [x["symbole"] for x in self.joueurs]
         for i in self.grille:
@@ -155,6 +136,11 @@ class Puissance4:
                 else:
                     print(f"{j} ", end="")
             print()
+    # def Affiche(self):
+    #     for i in self.grille:
+    #         for j in i:
+    #             print(f"{j} ", end="")
+    #         print()
     def Get_grille(self):
         return self.grille
     def Get_position(self, entree, grille = None):

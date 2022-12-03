@@ -11,12 +11,10 @@ def Meilleur_coup(jeu:object,n:int,ia=True, issue = 3):
     n_coups = jeu.L
     if n == 0 or issue in [1,2] :
         if issue == 2:
-            #TODO
             if not ia:
-                # FIXME support sy change
-                return (None, Eval(jeu, "+", "x") + n * 100000)
+                return (None, Eval(jeu,"+","x") + n * 10000000000)
             else:
-                return (None, Eval(jeu, "+", "x") - n * 100000)
+                return (None, Eval(jeu,"+","x") - n * 10000000000)
         if issue == 1:
             return (None, 0)
         else: #TODO
@@ -40,9 +38,6 @@ def Meilleur_coup(jeu:object,n:int,ia=True, issue = 3):
                 coup = [entree]
             elif new_score == value:
                 coup.append(entree)
-        if n == 5:
-            print(coup, value)
-            print(jeu_virtuel.missing)
         if coup == []:
             coup = coups_possibles[randint(0,len(coups_possibles)-1)]
         else:
@@ -78,11 +73,10 @@ def Eval(jeu, ia_sy, p_sy):
 
 def Evaluation(jeu, g_sy, b_sy) -> int:
     """Fonction qui retourne un score pour un coup"""
-    h_max = jeu.hauteur_max
     grille = jeu.grille
     wp = [] # (coord, missing)
     score = 0
-    for x in range(h_max, jeu.H):
+    for x in range(jeu.H):
         for y in range(jeu.L):
             directions = [
                 [(x,y), (x,y+1), (x,y+2), (x,y+3)],
@@ -107,15 +101,16 @@ def Evaluation(jeu, g_sy, b_sy) -> int:
                         coord = (i,j)
                 if n == -1:
                     continue
-                elif n == 4:
-                    score += 1000000
+                # elif n == 4:
+                #     print(4)
+                #     score += 1000000000000000
                 elif n == 3:
-                    score += 10000
+                    score += 100
                     if Under_wp(coord, wp):
-                        score += 100000
+                        score += 500
                     wp.append (coord)
                 elif n == 2:
-                    score += 100
+                    score += 10
                 elif n == 1:
                     score += 1
     return score

@@ -15,7 +15,7 @@ JEU = P4(j=[
 
 while True:
     try:
-        INT = int(input("Choississez son intelligence (6 ? 5 si trop long ou moi si t nul):\n>>>"))
+        INT = int(input("Choississez son intelligence (ex: 5):\n>>>"))
         if INT < 0:
             continue
         break

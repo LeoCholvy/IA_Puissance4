@@ -51,4 +51,4 @@ def arena(parties=10, depth_old=3, depth_nn=3):
 
 if __name__ == "__main__":
     # Tu peux changer les profondeurs ici pour tester l'impact
-    arena(parties=20, depth_old=2, depth_nn=2)
+    arena(parties=10, depth_old=3, depth_nn=1)

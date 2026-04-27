@@ -2,7 +2,8 @@
 # Branche "main": code testé et fonctionnel uniquement, Ne pas entrainer d'IA dans cette branche
 
 from Jeu import Puissance4 as P4
-from MinMax import Meilleur_coup
+# from MinMax import Meilleur_coup
+from MinMaxNN import Meilleur_coup_NN as Meilleur_coup
 # from colorama import Fore
 # from colorama import Style
 
